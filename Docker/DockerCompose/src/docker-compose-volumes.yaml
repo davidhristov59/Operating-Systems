@@ -1,0 +1,17 @@
+version: "3"
+
+services:
+  volumes-example-service:
+    image: alpine:latest
+    volumes:
+      - my_named_global_volume:/my-volumes/named-global-volume #volume sto go definiravme se mountuva vo ovaa pateka
+      - /tmp:/my-volumes/host-volume #/tmp фолдерот на домаќинот е мапиран со /my-volumes/host- volume фолдерот на контејнерот со write привилегии.
+      - /home:/my-volumes/readonly-host-volume:ro #/home фолдерот на домаќинот е мапиран со /my-volumes/readonly- host-volume фолдерот на контејнерот со read-only привилегии.
+  another-volumes-example-service:
+    image: alpine:latest
+    volumes:
+      - my_named_global_volume:/another-path/the-same-named-global-volume
+
+volumes: #definirame volumes
+  my_named_global_volume:
+    driver: local

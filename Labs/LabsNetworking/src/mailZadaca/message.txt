@@ -1,0 +1,296 @@
+version : '3.8'
+services:
+  client :
+    build:
+      context: .
+      dockerfile: Dockerfile-client
+    networks:
+      - server-client-private-network
+    depends_on:
+      - server
+    deploy:
+      replicas: 5
+
+  server:
+    build:
+      context: .
+      dockerfile: Dockerfile-server
+    networks:
+      - server-client-private-network
+    ports:
+      - "8765:8765"
+
+
+networks:
+    server-client-private-network:
+      driver: bridge
+
+
+
+FROM eclipse-temurin
+COPY . /src/app/client
+WORKDIR /src/app/client
+RUN javac TCP_Client.java
+CMD ["java","TCP_Client"]
+
+FROM eclipse-temurin
+COPY . /src/app/server
+WORKDIR /src/app/server
+RUN javac TCP_Server.java
+CMD ["java","TCP_Server"]
+
+
+package Zadaca;
+
+import java.io.*;
+import java.net.Socket;
+import java.net.UnknownHostException;
+import java.util.Scanner;
+
+public class TCP_Client extends Thread{
+    private String server_name;
+    private int server_port;
+    Socket socket=null;
+    PrintWriter writer = null;
+    BufferedReader reader = null;
+
+    public TCP_Client(String server_name, int server_port) {
+        this.server_name = server_name;
+        this.server_port = server_port;
+    }
+
+    @Override
+    public void run() {
+
+        String emailTo = "pazi_ledja@brzina.com";
+        String emailFrom = "busam_gumi@grom.com";
+        String emailCC = "eat_protein@suplements.com";
+        String data = "Benzin\nNafta\nProtein\nSteroidi\nTrenboloneAcetate\nWinstrolce\nChicken\n?";
+
+        try{
+            socket = new Socket(this.server_name,this.server_port);
+            writer=new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
+            reader=new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            writer.println("Connected");
+            writer.flush();
+            String response;
+            while (!(response=reader.readLine()).isEmpty())
+            {
+                if (response.startsWith("Start"))
+                {
+                    System.out.println("MAIL_TO "+emailTo);
+                    writer.println("MAIL_TO "+emailTo);
+                    writer.flush();
+                }else if (response.startsWith("TNX"))
+                {
+                    System.out.println("MAIL_FROM "+emailFrom);
+                    writer.println("MAIL_FROM "+emailFrom);
+                    writer.flush();
+                }else if (response.startsWith("200"))
+                {
+                    System.out.println("MAIL_CC "+emailCC);
+                    writer.println("MAIL_CC: "+emailCC);
+                    writer.flush();
+                }else if (response.startsWith("RECEIVERS"))
+                {
+                    System.out.println(data);
+                    writer.println(data);
+                    writer.flush();
+                }
+
+            }
+
+        } catch (UnknownHostException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }finally{
+            if (socket!=null)
+            {
+                try {
+                    socket.close();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (writer!=null)
+            {
+                writer.flush();
+                writer.close();
+            }
+            if (reader!=null)
+            {
+                try {
+                    reader.close();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+    }
+    private void waitForResponse(String expectedMessage) throws IOException {
+
+    }
+
+    public static void main(String[] args) {
+        TCP_Client client = new TCP_Client("localhost",8765);
+        client.start();
+    }
+}
+package Zadaca;
+
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
+
+public class TCP_Server extends Thread{
+    private int server_port;
+    private String fileOutput;
+    public TCP_Server(int port,String fileOutput)
+    {
+        this.server_port=port;
+        this.fileOutput=fileOutput;
+    }
+
+    @Override
+    public void run() {
+        System.out.println("Server starting..");
+        ServerSocket server_socket=null;
+        Socket clientSocket = null;
+        BufferedWriter fileWriter=null;
+        try{
+            fileWriter= new BufferedWriter(new FileWriter(fileOutput,true));
+            System.out.println("Waiting for new connections..");
+            server_socket=new ServerSocket(this.server_port);
+            while (true)
+            {
+                clientSocket = server_socket.accept();
+                new mailZadaca.Worker(clientSocket,fileWriter).start();
+
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    public static void main(String[] args) {
+        TCP_Server server = new TCP_Server(8765,"server.txt");
+        server.start();
+    }
+}
+package Zadaca;
+
+import java.io.*;
+import java.net.Socket;
+
+public class mailZadaca.Worker extends Thread{
+    Socket socket = null;
+    private BufferedWriter fileWriter;
+    public mailZadaca.Worker(Socket socket,BufferedWriter fileWriter)
+    {
+        this.socket=socket;
+        this.fileWriter=fileWriter;
+    }
+
+    @Override
+    public void run() {
+        BufferedReader reader = null;
+        PrintWriter writer = null;
+        String mailTO=null;
+        String mailCC=null;
+        boolean readData=false;
+        int counter=0;
+
+        try{
+            reader=new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            writer=new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
+
+            String message=null;
+            while(!(message=reader.readLine()).equals("EXIT"))
+            {
+                System.out.println("Server received: "+message);
+                if (message.equals("Connected"))
+                {
+                    writer.println("Start: "+socket.getInetAddress());
+                    writer.flush();
+                }
+                if (message.startsWith("MAIL_TO"))
+                {
+                    String[] parts = message.split(" ");
+                    if (parts[1].contains("@"))
+                    {
+                        mailTO=parts[1];
+                        writer.println("TNX");
+                        writer.flush();
+
+                    }else{
+                        throw new Exception("The email is not valid");
+                    }
+                }else if (message.startsWith("MAIL_FROM"))
+                {
+                    String[] parts = message.split(" ");
+                    if (parts[1].contains("@"))
+                    {
+                        writer.println("200");
+                        writer.flush();
+
+                    }else{
+                        throw new Exception("The email is not valid");
+                    }
+                }else if (message.startsWith("MAIL_CC"))
+                {
+                    String[] parts=message.split(" ");
+                    mailCC=parts[1];
+                    readData=true;
+                    writer.println("RECEIVERS: "+mailTO+","+mailCC+"\n");
+                    writer.flush();
+                }
+                if (readData)
+                {
+                  String data="";
+                  while (!(data=reader.readLine()).equals("?"))
+                  {
+                      counter++;
+                      fileWriter.write(data);
+                  }
+                  writer.println("RECEIVED "+counter+"\n");
+                  writer.flush();
+                  fileWriter.flush();
+                }
+
+            }
+
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        finally {
+            if (socket!=null)
+            {
+                try {
+                    socket.close();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (fileWriter!=null)
+            {
+                try {
+                    fileWriter.flush();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                try {
+                    fileWriter.close();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+
+        }
+    }
+}

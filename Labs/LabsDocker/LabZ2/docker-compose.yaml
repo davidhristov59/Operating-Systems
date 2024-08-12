@@ -1,0 +1,12 @@
+version: "3"
+services:
+  temperature-sensor:
+    build: ./TemperatureSensor
+    volumes:
+      - ./temperature.txt:/usr/src/temperature.txt
+
+  temperature-monitor:
+    build: ./TemperatureMonitor
+    volumes:
+      - ./temperature.txt:/usr/src/temperature.txt
+      - ./temperaturelevel.txt:/usr/src/temperaturelevel.txt

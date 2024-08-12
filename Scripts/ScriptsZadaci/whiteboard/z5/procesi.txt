@@ -1,0 +1,34 @@
+
+UID PID PPID C STIME TTY TIME CMD
+ 
+root 25433 2 0 11:19 ? 00:00:20 [kworker/3:2]
+ 
+root 25525 2 0 11:24 ? 00:00:20 [kworker/0:1]
+ 
+root 25533 2 0 11:24 ? 00:00:00 [kworker/1:0]
+ 
+root 26103 2 0 11:31 ? 00:00:00 [kworker/2:0]
+ 
+root 26426 2 0 11:36 ? 00:00:20 [kworker/3:0]
+ 
+root 26522 2 0 11:44 ? 00:00:00 [kworker/u256:1]
+ 
+root 26737 2 0 11:46 ? 00:00:00 [kworker/1:1]
+ 
+root 26795 2 0 11:48 ? 00:00:00 [kworker/u256:2]
+ 
+root 26803 2 0 11:48 ? 00:00:25 [kworker/0:2]
+ 
+root 26811 1 0 11:49 ? 00:00:00 /lib/systemd/systemd-hostnamed
+ 
+nasi 26826 1848 1 11:49 ? 00:00:15 gedit /home/nasi/Work/Zadaca
+ 
+nasi 26843 1848 2 11:49 ? 00:00:00 /usr/lib/gnome-terminal/gnome-
+ 
+nasi 26849 26843 0 11:49 pts/2 00:00:00 bash
+ 
+nasi 26872 26843 0 11:49 pts/18 00:00:20 bash
+ 
+nasi 26895 26843 0 11:49 pts/19 00:00:10 bash
+
+nasi 26910 26849 0 11:49 pts/2 00:00:00 ps -ef

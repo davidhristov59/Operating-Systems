@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+  app: #any name you want
+    build: . #what to build and specify a directory. It specifies that the Docker image for the "app" service should be build using the Dockerfile located in the current directory .
+    container_name: src_container
+    expose: #portata se izlozuva preku expose - za ako sakame da npravime networking - poveke containers da komuniciraat megju sebe na ista mreza
+      - "80"
+    ports: #porta 4000 e vidliva od host-ot
+      - "4000:80" #maps port 4000 on the host machine to port 80 in the Docker container.  It allows you to access the service running inside the container via port 4000 on your host machine.
+    volumes: #volumes mapping
+      #we map the data volume container to this directory in the Dockerfile
+      - data-volume:/usr/src/myapp/data #it's going to create a volume that will map the src folder to the app folder in the container. It ensures that the data inside the src folder on the host machine is accessible from the app folder within the container.
+
+volumes: #Volume definition
+  data-volume: #creates a volume data-volume and it mounts it to the directory INSIDE THE CONTAINER
+    driver: local #the volume will be managed locally on the host machine
+
+

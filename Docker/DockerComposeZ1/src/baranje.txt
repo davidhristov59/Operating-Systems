@@ -1,0 +1,19 @@
+Да се направат два Docker Compose
+сервиси. Едниот да користи nginx и да
+сервира html, а другиот да користи Java,
+да направи GET барање и да врати стринг.
+Решение:
+project/
+├── docker-compose.yml
+├── frontend/
+│ └── index.html
+└── backend/
+    ├── Dockerfile
+    └── SimpleHttpServer.java
+
+
+Za frontend avtomatski si se napravi folder, a za backend jas napraviv i staviv vo context: .
+Isto za mapiranje so portite staviv 8081:8080, namesto 8080:8080 bidejki taa porta se koristi
+
+docker-compose up -d --build - start na Docker Compose
+

@@ -1,0 +1,3 @@
+ls -l | grep "^d" | awk '{print $9}' | grep -E "^[A-Za-z]{10}$"
+
+//-E e za regular expression, 

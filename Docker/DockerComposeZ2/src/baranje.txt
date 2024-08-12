@@ -1,0 +1,25 @@
+//za nginx da kazeme kade se naoga(path) mozeme da vidime preku Docker Hub --> /usr/share/nginx/html
+//ZA CURRENT DIRECTORY
+
+//mora da sme vo tekovniot directory za da mozeme da izvrsuvame
+
+4. Startuvaj go Docker Compose
+- docker compose up -d
+
+localhost:8081
+
+docker compose run --rm frontend ls /usr/share/nginx/html (directory path od docker-compose.yaml za volume sto definiravme)
+docker compose run --rm backend ls /app (od Dockerfile path-ot)
+
+* --rm --> This flag removes the container after it exits, ensuring that it doesn't clutter your system with unused containers.
+*frontend i backend se folderite
+
+6.
+docker network ls
+docker network inspect src_frontend-backend-network | grep IPv4Address //najdi ja taa adresa so grep
+
+7.
+docker-compose exec frontend env
+docker-compose exec backend env
+
+8.promena samo na  vo docker-compose.yaml file-ot kaj environment

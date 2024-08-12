@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+  app:
+    build: .
+    container_name: source_container
+    expose:
+      - "80"
+    ports:
+      - "4000:80"
+    volumes:
+      - data-volume:/usr/src/myapp/data/
+
+volumes:
+  data-volume:
+    driver: local

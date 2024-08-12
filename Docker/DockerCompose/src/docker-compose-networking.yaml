@@ -1,0 +1,24 @@
+version: "3"
+
+services:
+  network_example_service:
+    image: karthequian/helloworld:latest
+    networks:
+      - my_shared_network
+
+  another_service_in_the_same_network:
+    image: alpine:latest
+    networks:
+      - my_shared_network
+
+  another_service_in_its_own_network:
+    image: alpine:latest
+    networks:
+      - my_private_network
+
+
+
+
+
+
+

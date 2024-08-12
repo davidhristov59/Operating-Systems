@@ -1,0 +1,14 @@
+version: "3"
+services:
+  nginx:
+    image: nginx
+    deploy:
+      replicas: 5
+
+  ubuntu:
+    image: ubuntu
+    deploy:
+      replicas: 1
+    depends_on:
+    - nginx
+

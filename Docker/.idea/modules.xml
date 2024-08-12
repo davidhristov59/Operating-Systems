@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/Docker.iml" filepath="$PROJECT_DIR$/.idea/Docker.iml" />
+      <module fileurl="file://$PROJECT_DIR$/DockerComposeZ1/DockerComposeZ1.iml" filepath="$PROJECT_DIR$/DockerComposeZ1/DockerComposeZ1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/DockerComposeZ2/DockerComposeZ2.iml" filepath="$PROJECT_DIR$/DockerComposeZ2/DockerComposeZ2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/LabZ1/LabZ1.iml" filepath="$PROJECT_DIR$/LabZ1/LabZ1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/LabZ2/LabZ2.iml" filepath="$PROJECT_DIR$/LabZ2/LabZ2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/docker-example/docker-example.iml" filepath="$PROJECT_DIR$/docker-example/docker-example.iml" />
+      <module fileurl="file://$PROJECT_DIR$/docker-example2/docker-example2.iml" filepath="$PROJECT_DIR$/docker-example2/docker-example2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/dockercompose-vezba/dockercompose-vezba.iml" filepath="$PROJECT_DIR$/dockercompose-vezba/dockercompose-vezba.iml" />
+      <module fileurl="file://$PROJECT_DIR$/dockerlab1vezba/dockerlab1vezba.iml" filepath="$PROJECT_DIR$/dockerlab1vezba/dockerlab1vezba.iml" />
+      <module fileurl="file://$PROJECT_DIR$/dockervezba1/dockervezba1.iml" filepath="$PROJECT_DIR$/dockervezba1/dockervezba1.iml" />
+    </modules>
+  </component>
+</project>

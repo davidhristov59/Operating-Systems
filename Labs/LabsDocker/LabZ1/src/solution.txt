@@ -1,0 +1,137 @@
+1. docker run -it --name nginx-product-host-i-container debian:11-slim /bin/bash
+
+/*
+apt update
+apt install nginx -y
+exit
+*/
+
+docker commit nginx-product-host-i-container nginx-product-host-i  --> Kreira nov Docker image
+
+docker rm nginx-product-host-i-container //removes the container after creating it but the image stays
+
+2.docker run -d -p 8080:80 --name nginx-product-host-i-container nginx-product-host-i
+
+3.Dockerfile
+
+FROM debian:11-slim #ovoj image go koristime
+WORKDIR /usr/share/nginx
+EXPOSE 80
+RUN apt-get update && apt-get install -y nginx  #install nginx
+CMD ["nginx", "-g", "daemon off;"] #da start NGINX vo container-ot I vo pozadina da si raboti
+
+Vo terminal:
+docker build -t nginx-product-host .  #buildame Docker image
+
+
+4. Run the image
+docker run -d -p 8082(1):80 --name nginx-product-host-container nginx-product-host
+
+//8081 e zafatena porta
+
+5.
+docker cp products.txt nginx-product-host-container:/var/www/html/
+
+docker cp products.txt nginx-product-host-i-container:/var/www/html/ //ne mi dava , vika no directory
+
+6.
+
+//so ovie komandi ke mi gi dade sodrzinite na products.txt na taa stranica - na localhost
+curl http://localhost:8080/products.txt --> ne mi dava bidejki ne mozev da kopiram products.txt vo container-ot nginx-product-host-i-container
+curl http://localhost:8082/products.txt --> mi ja dava sodrzinata --> porta 8082, 8081 mi e zafatena
+
+//za da mi go dade status code-ot treba
+curl -s -o /dev/null -w "%{http_code}" http://localhost:8082/products.txt --> -s oznacuva silent (nema da se prikazuva izlezot-sodrzinata), -o /dev/null oznacuva Опција за преусмерување на излезот во /dev/null, што значи дека содржината на веб-ресурсот нема да се зачува или прикаже, -w "%{http_code}": Опција за форматирање на излезот, кој ќе го печати само HTTP статус кодот на веб-ресурсот.
+
+curl -s -o /dev/null -w "%{http_code}" http://localhost:8080/products.txt --> ne raboti poradi container-ot , nema products.txt vo nego
+
+7.
+Stopiranje na 2ta containers
+docker stop nginx-product-host-container
+docker stop nginx-product-host-i-container
+
+Otstranuvanje na 2ta containers
+docker rm nginx-product-host-container
+docker rm nginx-product-host-i-container
+
+8.
+mkdir html
+cp products.txt html/
+
+9.
+docker run -d -p 8082:80 --name nginx-product-host-container nginx-product-host --> otkako ke se formira ke mi dade container id
+docker volume create product-host-volume
+docker run -d -p 8083:80 -v product-host-volume:/var/www/html/ nginx-product-host
+
+10.
+Treba sodrzinata na products.txt da mi ja dade na lokacijata http://localhost:8082/products.txt. no mene html mi davase.
+Problemot bese sto ne mi se kopirala datotekata products.txt vo direktoriumot /var/www/html/
+
+Napraviv docker cp products.txt nginx-product-host-container:/var/www/html -> kopirav vo toj direktorium
+
+i proveruvam dali sodrzinata na products.txt e tamu so komandata
+
+curl http://localhost:8082/products.txt - mi ja lista sodrzinata na products.txt
+
+Da, datotekata e dostapna na lokacijata http://localhost:8082/products.txt
+
+11.
+
+Dockerfile
+
+FROM openjdk:11-jdk
+WORKDIR /app
+COPY ProductsManagement.java /app
+RUN javac ProductsManagement.java
+CMD ["java", "ProductsManagement"]
+
+12.docker build -t products-viewer .
+
+13.
+docker volume create product-management-volume
+docker run -d -p 8082:80 -v product-management-volume:/var/www/html/ --name products-viewer-container products-viewer
+
+-p 8082:80 ??? - nez dali treba
+
+14. docker logs products-viewer-container
+
+15.
+
+import java.io.*;
+
+public class ProductsManagement {
+
+    public static void main(String[] args) {
+        String path = System.getenv("PRODUCT_FILE_PATH"); //tuka ja smeniv opkruzuvackata promenliva
+        if (path == null || path.isEmpty()) {
+            System.err.println("PRODUCT_FILE_PATH environment variable not set.");
+            return;
+        }
+        BufferedReader reader = null;
+        String line = null;
+        try {
+            reader = new BufferedReader(new InputStreamReader(new FileInputStream(path)));
+            while ((line = reader.readLine())!=null) {
+                String[] cells = line.split(";");
+                if (cells.length != 3) {
+                    throw new RuntimeException("Invalid row!");
+                }
+                System.out.printf("Product Name: %s\n", cells[0]);
+                System.out.printf("Product Price: %s\n", cells[1]);
+                System.out.printf("Product Quantity: %s\n", cells[2]);
+                System.out.println("\n");
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
+
+16.
+docker stop products-viewer-container
+docker rm products-viewer-container
+docker run -d -p 8083:80 -e PRODUCT_FILE_PATH=/var/www/html/products.txt --name products-viewer-container products-viewer
+
+17.docker logs products-viewer-container

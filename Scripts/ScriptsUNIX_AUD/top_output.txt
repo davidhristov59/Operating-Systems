@@ -1,0 +1,65 @@
+Processes: 427 total, 3 running, 424 sleeping, 4505 threads 
+2024/06/22 03:20:33
+Load Avg: 1.73, 1.79, 1.67 
+CPU usage: 3.81% user, 12.21% sys, 83.96% idle 
+SharedLibs: 302M resident, 58M data, 12M linkedit.
+MemRegions: 153521 total, 1150M resident, 99M private, 437M shared.
+PhysMem: 7571M used (3651M wired, 1746M compressor), 53M unused.
+VM: 165T vsize, 4769M framework vsize, 1128863103(0) swapins, 1148912948(0) swapouts.
+Networks: packets: 248568016/276G in, 89885384/32G out.
+Disks: 668204117/25T read, 380327050/18T written.
+
+PID    COMMAND  %CPU TIME     #TH #WQ #PORTS MEM PURG CMPRS PGRP  PPID STATE    BOOSTS %CPU_ME %CPU_OTHRS UID FAULTS   COW MSGSENT MSGRECV SYSBSD SYSMACH CSW     PAGEINS IDLEW POWER INSTRS CYCLES USER         #MREGS RPRVT VPRVT VSIZE KPRVT KSHRD
+98008  talagent 0.0  02:02.01 2   1   152    17M 0B   16M   98008 1    sleeping *0[1]  0.00000 0.00000    501 11747778 162 1058053 200287  650281 2471976 4173787 16336   983   0.0   0      0      davidhristov N/A    N/A   N/A   N/A   N/A   N/A  
+Processes: 427 total, 2 running, 425 sleeping, 4504 threads 
+2024/06/22 03:20:34
+Load Avg: 1.73, 1.79, 1.67 
+CPU usage: 6.10% user, 4.26% sys, 89.63% idle 
+SharedLibs: 302M resident, 58M data, 12M linkedit.
+MemRegions: 153521 total, 1150M resident, 99M private, 437M shared.
+PhysMem: 7579M used (3634M wired, 1746M compressor), 45M unused.
+VM: 165T vsize, 4769M framework vsize, 1128863107(4) swapins, 1148912948(0) swapouts.
+Networks: packets: 248568056/276G in, 89885418/32G out.
+Disks: 668204231/25T read, 380327477/18T written.
+
+PID    COMMAND       %CPU TIME     #TH #WQ #PORTS MEM   PURG  CMPRS PGRP  PPID STATE    BOOSTS       %CPU_ME %CPU_OTHRS UID FAULTS    COW MSGSENT  MSGRECV  SYSBSD    SYSMACH   CSW       PAGEINS IDLEW  POWER INSTRS    CYCLES    USER         #MREGS RPRVT VPRVT VSIZE KPRVT KSHRD
+9735   fileproviderd 9.3  51:59.84 7   6   203+   168M+ 640K+ 122M- 9735  1    sleeping *37898+[770] 4.10898 0.81043    501 35399246+ 254 1925235+ 1290712+ 95355782+ 15165057+ 22923331+ 1055376 146209 9.3   252449110 174900282 davidhristov N/A    N/A   N/A   N/A   N/A   N/A  
+Processes: 427 total, 2 running, 425 sleeping, 4506 threads 
+2024/06/22 03:20:35
+Load Avg: 1.73, 1.79, 1.67 
+CPU usage: 2.93% user, 2.46% sys, 94.60% idle 
+SharedLibs: 302M resident, 58M data, 12M linkedit.
+MemRegions: 153521 total, 1150M resident, 99M private, 437M shared.
+PhysMem: 7512M used (3532M wired, 1723M compressor), 113M unused.
+VM: 165T vsize, 4769M framework vsize, 1128863111(4) swapins, 1148912948(0) swapouts.
+Networks: packets: 248568089/276G in, 89885443/32G out.
+Disks: 668204333/25T read, 380327687/18T written.
+
+PID    COMMAND       %CPU TIME     #TH #WQ #PORTS MEM   PURG  CMPRS PGRP  PPID  STATE    BOOSTS       %CPU_ME %CPU_OTHRS UID FAULTS    COW MSGSENT  MSGRECV  SYSBSD    SYSMACH   CSW       PAGEINS IDLEW  POWER INSTRS    CYCLES    USER         #MREGS RPRVT VPRVT VSIZE KPRVT KSHRD
+46147  top           6.0  00:00.31 1/1 0   27     6017K 0B    0B    46147 35865 running  *0[1]        0.00000 0.00000    0   1956+     83  369096+  184542+  5341+     202013+   43+       4       0      6.0   136123396 151957761 root         N/A    N/A   N/A   N/A   N/A   N/A  
+Processes: 427 total, 3 running, 424 sleeping, 4511 threads 
+2024/06/22 03:20:36
+Load Avg: 1.73, 1.79, 1.67 
+CPU usage: 8.7% user, 4.21% sys, 87.71% idle 
+SharedLibs: 302M resident, 58M data, 12M linkedit.
+MemRegions: 153521 total, 1150M resident, 99M private, 437M shared.
+PhysMem: 7526M used (3539M wired, 1722M compressor), 98M unused.
+VM: 165T vsize, 4769M framework vsize, 1128863119(8) swapins, 1148912948(0) swapouts.
+Networks: packets: 248568127/276G in, 89885480/32G out.
+Disks: 668204622/25T read, 380328156/18T written.
+
+PID    COMMAND       %CPU TIME     #TH #WQ #PORTS MEM   PURG  CMPRS PGRP  PPID  STATE    BOOSTS       %CPU_ME %CPU_OTHRS UID FAULTS    COW MSGSENT  MSGRECV  SYSBSD    SYSMACH   CSW       PAGEINS  IDLEW  POWER INSTRS    CYCLES    USER         #MREGS RPRVT VPRVT VSIZE KPRVT KSHRD
+9735   fileproviderd 12.9 52:00.01 7   6   206+   169M+ 512K  121M- 9735  1     sleeping *37944+[770] 8.49004 0.54903    501 35399457+ 254 1925484+ 1290901+ 95358865+ 15165899+ 22924012+ 1055385+ 146209 12.9  333552583 295693612 davidhristov N/A    N/A   N/A   N/A   N/A   N/A  
+Processes: 427 total, 5 running, 422 sleeping, 4508 threads 
+2024/06/22 03:20:37
+Load Avg: 2.31, 1.91, 1.71 
+CPU usage: 8.78% user, 5.38% sys, 85.83% idle 
+SharedLibs: 302M resident, 58M data, 12M linkedit.
+MemRegions: 153521 total, 1150M resident, 99M private, 437M shared.
+PhysMem: 7542M used (3539M wired, 1719M compressor), 80M unused.
+VM: 165T vsize, 4769M framework vsize, 1128863139(20) swapins, 1148912948(0) swapouts.
+Networks: packets: 248568181/276G in, 89885526/32G out.
+Disks: 668204821/25T read, 380328800/18T written.
+
+PID    COMMAND       %CPU TIME     #TH #WQ #PORTS MEM   PURG  CMPRS PGRP  PPID  STATE    BOOSTS       %CPU_ME %CPU_OTHRS UID FAULTS    COW MSGSENT  MSGRECV  SYSBSD    SYSMACH   CSW       PAGEINS  IDLEW  POWER INSTRS    CYCLES    USER         #MREGS RPRVT VPRVT VSIZE KPRVT KSHRD
+9735   fileproviderd 10.8 52:00.13 7/1 6/1 204-   168M- 512K  121M- 9735  1     running  *37988+[770] 7.67062 1.05020    501 35399539+ 254 1925660+ 1291050+ 95361304+ 15166433+ 22924507+ 1055387+ 146209 10.8  272202069 196390502 davidhristov N/A    N/A   N/A   N/A   N/A   N/A  

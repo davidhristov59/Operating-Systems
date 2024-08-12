@@ -1,0 +1,25 @@
+version: "3"
+services:
+  web: #front-end - HTML
+    image: nginx:alpine
+    ports:
+      - "80:80" # Port 80 on the host machine is mapped to port 80 inside the container. This means that traffic coming to port 80 on the host machine will be forwarded to port 80 inside the container, allowing users to access the front-end application via http://localhost.
+    volumes:
+      - ./frontend:/usr/share/nginx/html #the local directory ./frontend is mounted as a volume to "path"
+      #This means that the HTML files and other static content present in the ./frontend
+      # directory on the host machine will be available to Nginx inside the container.
+      # This allows you to easily make changes to the front-end content without rebuilding the Docker image.
+
+  backend:
+    build: # This service is built using a Dockerfile located in the ./backend directory. The context for the build is set to ./backend, meaning that Docker will look for the Dockerfile and any other files needed for the build in that directory.
+      context: . #current directory.  Indicates that the build context for the Docker image is the current directory where the docker-compose.yml file is located.
+      dockerfile: Dockerfile
+    ports: #smeniv na port 8081
+      - "8081:8080" #Ports: Port 8081 on the host machine is mapped to port 8080 inside the container. This allows external clients to communicate with the backend service running inside the container via port 8080.
+
+#!!!!!!
+  #In summary, this Docker Compose file defines two services: a front-end service using Nginx
+  #to serve HTML content, and a backend service built from a Dockerfile located in the ./backend
+  #directory. The front-end service exposes port 80, while the backend service exposes port 8080.
+  #Additionally, the front-end service mounts a local directory as a volume, allowing for easy
+  #development and customization of the front-end content.

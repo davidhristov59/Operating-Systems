@@ -1,0 +1,43 @@
+version: '3'
+services:
+  frontend:
+    image: nginx:alpine
+
+    ports:
+      - "81:80"
+
+    volumes: #1 baranje
+      - frontend-code:/usr/share/nginx/html
+
+    networks: #2 baranje
+      - frontend-backend-network
+
+    environment: #3 baranje
+      - NGINX_HOST=frontend.example.com
+      - NGINX_PORT=80
+
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+    ports:
+      - "8081:8080"
+
+    volumes: #1 baranje
+      - backend-code:/app
+
+    networks: #2 baranje
+      - frontend-backend-network
+
+    environment: #3 baranje
+      - API_KEY=your_api_key
+
+
+volumes: #1 baranje
+  frontend-code:
+  backend-code:
+
+networks:
+  frontend-backend-network: #2 baranje
+    driver: bridge
